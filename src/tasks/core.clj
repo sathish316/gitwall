@@ -9,20 +9,29 @@
 (defn display []
   (html [:h1 "Hello world"]))
 
+(defn default-javascripts []
+  (html
+   (include-js "/javascripts/jquery.min.js")
+   (include-js "/javascripts/application.js")
+   (include-js "/javascripts/jquery.form.js")))
+               
 (defn add-new-task-form []
   (html
-   (form-to [:post "/tasks"]
+   (default-javascripts)
+   (form-to {:id "new_task_form"} [:post "/tasks"]
             "Task"
             [:br]
             (text-field :task)
-            (submit-button "Add"))))
+            (submit-button "Add"))
+   [:div {:id "tasks_result"} "Tasks added so far"]))
 
 (defn create-task [task session]
-  (let [tasks (session :tasks)]
-    {:body (str "Saved " task)
-     :session {:tasks (if (vector? tasks)
-                        (conj tasks task)
-                        (vector task))}}))
+  (let [tasks (session :tasks)
+        result (if (vector? tasks)
+                 (conj tasks task)
+                 (vector task))]
+    {:body (html (unordered-list result))
+     :session {:tasks result}}))
 
 (defn view-tasks [tasks session]
   (html
