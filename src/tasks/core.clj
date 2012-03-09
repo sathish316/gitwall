@@ -11,20 +11,30 @@
 
 (defn default-javascripts []
   (html
-   (include-js "/javascripts/jquery.min.js")
-   (include-js "/javascripts/application.js")
-   (include-js "/javascripts/jquery.form.js")))
-               
+   (include-js "/js/jquery.min.js")
+   (include-js "/js/application.js")
+   (include-js "/js/jquery.form.js")
+   (include-js "/js/bootstrap.js")))
+
+(defn default-stylesheets []
+  (html
+   (include-css "/css/bootstrap.min.css")
+   (include-css "/css/bootstrap-responsive.min.css")))
+
 (defn add-new-task-form []
   (html
-   (default-javascripts)
-   (form-to {:id "new_task_form"} [:post "/tasks"]
-            "Task"
-            [:br]
-            (text-field :task)
-            (submit-button "Add"))
-   [:div {:id "tasks_result"} "Tasks added so far"]))
-
+   [:html
+    [:head
+     (default-javascripts)
+     (default-stylesheets)]
+    [:body
+     (form-to {:id "new_task_form"} [:post "/tasks"]
+              "Task"
+              [:br]
+              (text-field :task)
+              (submit-button {:class "btn-primary"} "Add"))
+     [:div {:id "tasks_result"} "Tasks added so far"]]]))
+  
 (defn create-task [task session]
   (let [tasks (session :tasks)
         result (if (vector? tasks)
