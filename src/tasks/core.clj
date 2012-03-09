@@ -3,7 +3,8 @@
         hiccup.core
         hiccup.form-helpers
         hiccup.page-helpers)
-  (:require [compojure.handler :as handler]))
+  (:require [compojure.handler :as handler]
+            [compojure.route :as route]))
 
 (defn display []
   (html [:h1 "Hello world"]))
@@ -34,8 +35,8 @@
   (POST "/tasks" {params :params session :session}
         (create-task (params :task) session))
   (GET "/tasks" {session :session}
-       (view-tasks (:tasks session) session)))
-        
+       (view-tasks (:tasks session) session))
+  (route/resources "/"))
 
 (def app
   (handler/site myroutes))
