@@ -1,7 +1,8 @@
 (ns tasks.core
   (:use compojure.core
         hiccup.core
-        hiccup.form-helpers)
+        hiccup.form-helpers
+        hiccup.page-helpers)
   (:require [compojure.handler :as handler]))
 
 (defn display []
@@ -15,22 +16,25 @@
             (text-field :task)
             (submit-button "Add"))))
 
-(defn create-task [task]
-  {:body (str "Saved " task)
-   :session {:tasks task}})
+(defn create-task [task session]
+  (let [tasks (session :tasks)]
+    {:body (str "Saved " task)
+     :session {:tasks (if (vector? tasks)
+                        (conj tasks task)
+                        (vector task))}}))
 
-(defn view-tasks [tasks]
+(defn view-tasks [tasks session]
   (html
-   [:h1 (str "Tasks")]
-   [:p tasks]))
+   [:h1 "Tasks"]
+   (unordered-list (:tasks session))))
 
 (defroutes myroutes
   (GET "/" [] (display))
   (GET "/tasks/new" [] (add-new-task-form))
-  (POST "/tasks" {params :params}
-        (create-task (params :task)))
+  (POST "/tasks" {params :params session :session}
+        (create-task (params :task) session))
   (GET "/tasks" {session :session}
-       (view-tasks (:tasks session))))
+       (view-tasks (:tasks session) session)))
         
 
 (def app
