@@ -9,7 +9,7 @@
 (defroutes app-routes
   (GET "/" [] (login/login-page))
   (GET "/tasks" {session :session}
-       (tasks/add-new-task-form session))
+       (tasks/gitwall session))
   (POST "/tasks" {params :params session :session}
         (tasks/create-task (params :task) session))
   (route/resources "/"))

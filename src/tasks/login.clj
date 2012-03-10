@@ -3,7 +3,8 @@
         hiccup.core
         hiccup.form-helpers
         hiccup.page-helpers
-        tasks.assets))
+        tasks.assets)
+  (:require [tasks.oauth_github :as oauth_github]))
 
 (defn login-page []
   (html
