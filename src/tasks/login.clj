@@ -5,7 +5,8 @@
         hiccup.page-helpers
         tasks.assets)
   (:require [tasks.oauth_github :as oauth_github]
-            [ring.util.response :as response]))
+            [ring.util.response :as response]
+            [tasks.navbar :as navbar]))
 
 (defn login-page []
   (html
@@ -13,8 +14,8 @@
     [:head
      (default-stylesheets)]
     [:body
+     (navbar/navbar)
      [:div
-      [:h2 "Github Tasks"]
       (form-to [:post (:uri oauth_github/auth-req)]
                (submit-button "Sign in using Github"))]]]))
 

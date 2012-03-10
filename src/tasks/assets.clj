@@ -13,4 +13,5 @@
 (defn default-stylesheets []
   (html
    (include-css "/css/bootstrap.min.css")
-   (include-css "/css/bootstrap-responsive.min.css")))
+   (include-css "/css/bootstrap-responsive.min.css")
+   (include-css "/css/application.css")))

@@ -5,7 +5,8 @@
         hiccup.page-helpers
         tasks.assets)
   (:require [ring.util.response :as response]
-            [tasks.projects :as projects]))
+            [tasks.projects :as projects]
+            [tasks.navbar :as navbar]))
 
 (declare new-task)
 (declare list-tasks)
@@ -17,8 +18,9 @@
      (default-javascripts)
      (default-stylesheets)]
     [:body
-     [:div {:class "container-fluid"}
-      [:div {:class "row-fluid"}
+     (navbar/navbar)
+     [:div {:class "container"}
+      [:div {:class "row"}
        [:div {:class "span2 projects-container"}
         [:h3 "Projects"]
         (projects/list-projects (projects/get-projects-for-user))]
