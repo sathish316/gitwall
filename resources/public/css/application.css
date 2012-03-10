@@ -1,3 +1,9 @@
 body {
     padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
+.github-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    padding-right: 5px;
+}

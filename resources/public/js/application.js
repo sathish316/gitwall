@@ -11,4 +11,7 @@ $(document).ready(function(){
 	});
     });
 
+    $('#github-sign-in').click(function(){
+	$('#github-sign-in-form').submit();
+    });
 });

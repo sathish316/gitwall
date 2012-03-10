@@ -6,7 +6,19 @@
         tasks.assets)
   (:require [ring.util.response :as response]
             [tasks.projects :as projects]
-            [tasks.navbar :as navbar]))
+            [tasks.navbar :as navbar]
+            [tasks.oauth_github :as oauth_github]))
+
+(defn get-github-username [access-token]
+  "faked-username")
+
+(defn store-access-token-and-redirect-to-tasks [params session]
+  (let [access-token (oauth_github/access-token params)
+        session (assoc session
+                  :access_token access-token
+                  :github_username (get-github-username access-token))]
+    (-> (response/redirect "/tasks")
+        (assoc :session session))))
 
 (declare new-task)
 (declare list-tasks)
@@ -18,12 +30,13 @@
      (default-javascripts)
      (default-stylesheets)]
     [:body
-     (navbar/navbar)
+     (navbar/navbar session)
      [:div {:class "container"}
       [:div {:class "row"}
        [:div {:class "span2 projects-container"}
         [:h3 "Projects"]
-        (projects/list-projects (projects/get-projects-for-user))]
+        (projects/list-projects (projects/get-projects-for-user))
+        (form-to {:id "github-sign-in-form"} [:post (:uri oauth_github/auth-req)])]
        [:div {:class "span10 wall-container"}
         [:h3 "Tasks"]
         (new-task)
