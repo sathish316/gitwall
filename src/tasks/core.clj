@@ -6,9 +6,6 @@
   (:require [compojure.handler :as handler]
             [compojure.route :as route]))
 
-(defn display []
-  (html [:h1 "Hello world"]))
-
 (defn default-javascripts []
   (html
    (include-js "/js/jquery.min.js")
@@ -21,7 +18,7 @@
    (include-css "/css/bootstrap.min.css")
    (include-css "/css/bootstrap-responsive.min.css")))
 
-(defn add-new-task-form []
+(defn add-new-task-form [session]
   (html
    [:html
     [:head
@@ -33,7 +30,8 @@
               [:br]
               (text-field :task)
               (submit-button {:class "btn-primary"} "Add"))
-     [:div {:id "tasks_result"} "Tasks added so far"]]]))
+     [:div {:id "tasks"}
+      (unordered-list (:tasks session))]]]))
   
 (defn create-task [task session]
   (let [tasks (session :tasks)
@@ -43,18 +41,11 @@
     {:body (html (unordered-list result))
      :session {:tasks result}}))
 
-(defn view-tasks [tasks session]
-  (html
-   [:h1 "Tasks"]
-   (unordered-list (:tasks session))))
-
 (defroutes myroutes
-  (GET "/" [] (display))
-  (GET "/tasks/new" [] (add-new-task-form))
+  (GET "/tasks" {session :session}
+       (add-new-task-form session))
   (POST "/tasks" {params :params session :session}
         (create-task (params :task) session))
-  (GET "/tasks" {session :session}
-       (view-tasks (:tasks session) session))
   (route/resources "/"))
 
 (def app
