@@ -33,7 +33,7 @@
       [:div {:class "row"}
        [:div {:class "span2 projects-container"}
         [:h3 "Projects"]
-        (projects/list-projects (projects/get-projects-for-user))
+        (projects/list-projects (github/repos (:access_token session)))
         (form-to {:id "github-sign-in-form"} [:post (:uri oauth_github/auth-req)])]
        [:div {:class "span10 wall-container"}
         [:h3 "Tasks"]

@@ -14,4 +14,9 @@ $(document).ready(function(){
     $('#github-sign-in').click(function(){
 	$('#github-sign-in-form').submit();
     });
+
+    $(".project-link").click(function(){
+	$(".project-link.active").removeClass('active');
+	$(this).addClass('active');
+    });
 });

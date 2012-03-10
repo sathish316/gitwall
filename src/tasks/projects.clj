@@ -7,14 +7,12 @@
 
 (defn project-link [project]
   (html
-   [:li
-    [:a project]]))
+   [:li {:class "project-link"}
+    [:a {:title (:description project) :href "#"}
+     (:name project)]]))
 
 (defn list-projects [projects]
   (html
-   [:ul
+   [:ul {:class "nav nav-pills nav-stacked"}
     (map project-link projects)]))
-
-(defn get-projects-for-user [] ;TODO for user
-  ["Shopping cart" "Super Mario" "iPad Whiteboard" "Facebook app"])
   
