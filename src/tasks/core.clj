@@ -5,8 +5,10 @@
         hiccup.page-helpers)
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
-            [ring.util.response :as response]))
+            [ring.util.response :as response]
+            [tasks.oauth_github :as oauth_github]))
 
+;;TODO: Move to assets.clj
 (defn default-javascripts []
   (html
    (include-js "/js/jquery.min.js")
@@ -19,6 +21,19 @@
    (include-css "/css/bootstrap.min.css")
    (include-css "/css/bootstrap-responsive.min.css")))
 
+;;TODO: Move to login.clj
+(defn login-page []
+  (html
+   [:html
+    [:head
+     (default-stylesheets)]
+    [:body
+     [:div
+      [:h2 "Github Tasks"]
+      (form-to [:post (:uri oauth_github/auth-req)]
+               (submit-button "Sign in using Github"))]]]))
+
+;;TODO: Move to tasks.clj
 (defn add-new-task-form [session]
   (html
    [:html
@@ -42,8 +57,10 @@
     {:body (html (unordered-list result))
      :session {:tasks result}}))
 
-(defroutes myroutes
-  (GET "/" [] (response/redirect "/tasks"))
+;;TODO: Move to routes.clj
+(defroutes app-routes
+  (GET "/" [] (login-page))
+;  (GET "/" [] (response/redirect (:uri oauth_github/auth-req)))
   (GET "/tasks" {session :session}
        (add-new-task-form session))
   (POST "/tasks" {params :params session :session}
@@ -51,4 +68,5 @@
   (route/resources "/"))
 
 (def app
-  (handler/site myroutes))
+  (handler/site app-routes))
+
