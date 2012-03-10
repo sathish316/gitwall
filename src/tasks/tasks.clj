@@ -7,16 +7,14 @@
   (:require [ring.util.response :as response]
             [tasks.projects :as projects]
             [tasks.navbar :as navbar]
-            [tasks.oauth_github :as oauth_github]))
-
-(defn get-github-username [access-token]
-  "faked-username")
+            [tasks.oauth_github :as oauth_github]
+            [tasks.github :as github]))
 
 (defn store-access-token-and-redirect-to-tasks [params session]
-  (let [access-token (oauth_github/access-token params)
+  (let [access-token (:access-token (oauth_github/access-token params))
         session (assoc session
                   :access_token access-token
-                  :github_username (get-github-username access-token))]
+                  :github_username (github/user_login access-token))]
     (-> (response/redirect "/tasks")
         (assoc :session session))))
 
