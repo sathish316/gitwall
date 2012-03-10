@@ -8,10 +8,10 @@
    :client-id "91dc35fe530ab2a358b2"
    :client-secret "4914f9d2be376e4579e04ef203ebe37af4079f2b"
    :access-query-param :access-token
-   :grant-type 'authorization-code})
+   :grant-type "authorization_code"})
 
 (def auth-req
-  (oauth2/make-auth-request github-oauth2 "abcdef"))
+  (oauth2/make-auth-request github-oauth2 nil))
 
-;(def access-token
-;  (oauth2/get-access-token github-oauth2 auth-resp auth-req))
+(defn access-token [auth-resp]
+  (oauth2/get-access-token github-oauth2 auth-resp auth-req))

@@ -8,6 +8,8 @@
 
 (defroutes app-routes
   (GET "/" [] (login/login-page))
+  (GET "/github_oauth2_callback" {params :params session :session}
+       (login/store-access-token-and-redirect-to-tasks params session))
   (GET "/tasks" {session :session}
        (tasks/gitwall session))
   (POST "/tasks" {params :params session :session}
