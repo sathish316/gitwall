@@ -18,33 +18,13 @@
     (-> (response/redirect "/tasks")
         (assoc :session session))))
 
-(declare new-task)
-(declare list-tasks)
-
-(defn gitwall [session]
-  (html
-   [:html
-    [:head
-     (default-javascripts)
-     (default-stylesheets)]
-    [:body
-     (navbar/navbar session)
-     [:div {:class "container"}
-      [:div {:class "row"}
-       [:div {:class "span2 projects-container"}
-        [:h3 "Projects"]
-        (projects/list-projects (github/repos (:access_token session)))
-        (form-to {:id "github-sign-in-form"} [:post (:uri oauth_github/auth-req)])]
-       [:div {:class "span10 wall-container"}
-        [:h3 "Tasks"]
-        (new-task)
-        (list-tasks session)]]]]]))
-
 (defn new-task []
   (html
    (form-to {:id "new_task_form"} [:post "/tasks"]
-            (text-field :task)
-            (submit-button {:class "btn-primary"} "Add"))))
+            [:div {:class "controls"}
+             (text-field {:class "input-xlarge add-task-field"} :task)
+             (submit-button {:class "btn-primary add-task-btn"} "Add")
+             ])))
 
 (defn list-tasks [session]
   (html

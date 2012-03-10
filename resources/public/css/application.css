@@ -7,3 +7,11 @@ body {
     vertical-align: middle;
     padding-right: 5px;
 }
+.add-task-field {
+    height: 25px;
+    margin-right: 5px;
+}
+.add-task-btn {
+    padding-left: 10px;
+    padding-right: 10px;
+}
