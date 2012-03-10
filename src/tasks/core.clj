@@ -4,7 +4,8 @@
         hiccup.form-helpers
         hiccup.page-helpers)
   (:require [compojure.handler :as handler]
-            [compojure.route :as route]))
+            [compojure.route :as route]
+            [ring.util.response :as response]))
 
 (defn default-javascripts []
   (html
@@ -42,6 +43,7 @@
      :session {:tasks result}}))
 
 (defroutes myroutes
+  (GET "/" [] (response/redirect "/tasks"))
   (GET "/tasks" {session :session}
        (add-new-task-form session))
   (POST "/tasks" {params :params session :session}
