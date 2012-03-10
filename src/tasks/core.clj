@@ -2,24 +2,13 @@
   (:use compojure.core
         hiccup.core
         hiccup.form-helpers
-        hiccup.page-helpers)
+        hiccup.page-helpers
+        tasks.assets)
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [ring.util.response :as response]
-            [tasks.oauth_github :as oauth_github]))
-
-;;TODO: Move to assets.clj
-(defn default-javascripts []
-  (html
-   (include-js "/js/jquery.min.js")
-   (include-js "/js/application.js")
-   (include-js "/js/jquery.form.js")
-   (include-js "/js/bootstrap.js")))
-
-(defn default-stylesheets []
-  (html
-   (include-css "/css/bootstrap.min.css")
-   (include-css "/css/bootstrap-responsive.min.css")))
+            [tasks.oauth_github :as oauth_github]
+            tasks.assets))
 
 ;;TODO: Move to login.clj
 (defn login-page []
