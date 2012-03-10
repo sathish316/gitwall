@@ -8,19 +8,7 @@
             [compojure.route :as route]
             [ring.util.response :as response]
             [tasks.oauth_github :as oauth_github]
-            tasks.assets))
-
-;;TODO: Move to login.clj
-(defn login-page []
-  (html
-   [:html
-    [:head
-     (default-stylesheets)]
-    [:body
-     [:div
-      [:h2 "Github Tasks"]
-      (form-to [:post (:uri oauth_github/auth-req)]
-               (submit-button "Sign in using Github"))]]]))
+            [tasks.login :as login]))
 
 ;;TODO: Move to tasks.clj
 (defn add-new-task-form [session]
@@ -48,7 +36,7 @@
 
 ;;TODO: Move to routes.clj
 (defroutes app-routes
-  (GET "/" [] (login-page))
+  (GET "/" [] (login/login-page))
 ;  (GET "/" [] (response/redirect (:uri oauth_github/auth-req)))
   (GET "/tasks" {session :session}
        (add-new-task-form session))
