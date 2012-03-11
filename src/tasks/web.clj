@@ -1,5 +1,6 @@
-(ns tasks.core
-  (:use compojure.core)
+(ns tasks.web
+  (:use compojure.core
+        ring.adapter.jetty)
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [ring.util.response :as response]
@@ -19,3 +20,6 @@
 (def app
   (handler/site app-routes))
 
+(defn -main []
+  (let [port (Integer/parseInt (System/getenv "PORT"))]
+    (run-jetty app {:port port})))
