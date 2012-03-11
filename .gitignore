@@ -8,3 +8,4 @@
 /.lein-deps-sum
 *~
 .DS_Store
+learn*.clj

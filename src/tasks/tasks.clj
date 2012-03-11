@@ -3,13 +3,15 @@
         hiccup.core
         hiccup.form-helpers
         hiccup.page-helpers
-        tasks.assets)
+        tasks.assets
+        somnium.congomongo)
   (:require [ring.util.response :as response]
             [tasks.projects :as projects]
             [tasks.navbar :as navbar]
             [tasks.oauth_github :as oauth_github]
             [tasks.github :as github]
-            [tasks.sample :as sample]))
+            [tasks.sample :as sample]
+            [tasks.model.task :as task]))
 
 (defn store-access-token-and-redirect-to-tasks [params session]
   (let [access-token (:access-token (oauth_github/access-token params))
@@ -69,11 +71,8 @@
           sample/sample-statuses))
 
 (defn create-task [task session]
-  (let [tasks (session :tasks)
-        status (initial-status)
-        new-task {:id 1 :title task :status (:code status)} ; TODO:DB
-        result (if (vector? tasks)
-                 (conj tasks new-task) 
-                 (vector task))]
-    {:body (task-card status new-task)
-     :session {:tasks result}}))
+  (let [status (initial-status)
+        user (session :github_username)
+        project "default"
+        new-task (task/insert-task user project task status)]
+    {:body (task-card status new-task)}))

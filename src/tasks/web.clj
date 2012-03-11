@@ -5,7 +5,8 @@
             [compojure.route :as route]
             [ring.util.response :as response]
             [tasks.tasks :as tasks]
-            [tasks.home :as home]))
+            [tasks.home :as home]
+            [tasks.mongo :as mongo]))
 
 (defroutes app-routes
   (GET "/" [] (response/redirect "/tasks"))

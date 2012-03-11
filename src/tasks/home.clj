@@ -10,7 +10,8 @@
             [tasks.navbar :as navbar]
             [tasks.oauth_github :as oauth_github]
             [tasks.github :as github]
-            [tasks.sample :as sample]))
+            [tasks.sample :as sample]
+            [tasks.model.task :as task]))
 
 (defn gitwall [session]
   (html
@@ -30,6 +31,6 @@
         [:h3 "Tasks"]
         [:div
          (tasks/new-task)
-         (tasks/task-wall sample/sample-statuses (session :tasks))]]]]]]))
-         ;(tasks/list-tasks (:tasks session))]]]]]]))
-
+         (tasks/task-wall sample/sample-statuses
+                          (task/find-all-by (session :github_username)
+                                             "default"))]]]]]]))
