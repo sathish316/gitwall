@@ -26,6 +26,7 @@
    (form-to {:id "new_task_form" :autocomplete "off"} [:post "/tasks"]
             [:div {:class "controls"}
              (text-field {:class "input-xlarge add-task-field"} :task)
+             (hidden-field :project "default")
              (submit-button {:class "btn-primary add-task-btn"} "Add")
              ])))
 
@@ -70,10 +71,10 @@
              %1 %2)
           sample/sample-statuses))
 
-(defn create-task [task session]
+(defn create-task [project task session]
   (let [status (initial-status)
         user (session :github_username)
-        project "default"
+        project (or project "default")
         new-task (task/insert-task user project task status)]
     {:body (task-card status new-task)}))
 

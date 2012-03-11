@@ -13,7 +13,7 @@
             [tasks.sample :as sample]
             [tasks.model.task :as task]))
 
-(defn gitwall [session]
+(defn gitwall [project session]
   (html
    [:html
     [:head
@@ -33,4 +33,4 @@
          (tasks/new-task)
          (tasks/task-wall sample/sample-statuses
                           (task/find-all-by (session :github_username)
-                                             "default"))]]]]]]))
+                                            (or project "default")))]]]]]]))

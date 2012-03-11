@@ -28,9 +28,25 @@ $(document).ready(function(){
     });
 
     // Select active project (TODO: Load active project contents)
+    function loadProjectWall(){
+	$.ajax({
+	    url: "/tasks?project=" + $('#project').val(),
+	    type: 'GET',
+	    success: function(data, status, xhr){
+		$("#wall").html($(xhr.responseText).find("#wall").html());
+	    }
+	});
+    }
+
     $(".project-link").click(function(){
+	var isActive = $(this).hasClass('active');
 	$(".project-link.active").removeClass('active');
-	$(this).addClass('active');
+	$("#project").val("default");
+	if(!isActive){
+	    $(this).addClass('active');
+	    $("#project").val($(this).text());
+	}
+	loadProjectWall();
     });
 
     // Update card status when it is moved

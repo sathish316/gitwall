@@ -12,10 +12,13 @@
   (GET "/" [] (response/redirect "/tasks"))
   (GET "/github_oauth2_callback" {params :params session :session}
        (tasks/store-access-token-and-redirect-to-tasks params session))
-  (GET "/tasks" {session :session}
-       (home/gitwall session))
+  (GET "/tasks" {params :params session :session}
+       (home/gitwall (params :project)
+                     session))
   (POST "/tasks" {params :params session :session}
-        (tasks/create-task (params :task) session))
+        (tasks/create-task (params :project)
+                           (params :task)
+                           session))
   (PUT "/tasks/:id" {params :params session :session}
        (tasks/update-task (Integer. (params :id))
                           (Integer. (params :status))
