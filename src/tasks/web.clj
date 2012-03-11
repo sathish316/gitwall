@@ -16,6 +16,10 @@
        (home/gitwall session))
   (POST "/tasks" {params :params session :session}
         (tasks/create-task (params :task) session))
+  (PUT "/tasks/:id" {params :params session :session}
+       (tasks/update-task (Integer. (params :id))
+                          (Integer. (params :status))
+                          session))
   (route/resources "/"))
 
 (def app

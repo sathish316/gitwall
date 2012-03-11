@@ -33,13 +33,29 @@ $(document).ready(function(){
 	$(this).addClass('active');
     });
 
+    // Update card status when it is moved
     $('.task-column').sortable({
 	connectWith: ".task-column",
-	stop: function(event, ui){
-	    console.log("TODO: Update position and status");
-	    console.log($(this).attr('id'));
-	    console.log($(ui.item).attr('id'));	    
-	    console.log(ui.item.index());
+	receive: function(event, ui){
+	    var card = ui.item;
+	    var column = $(this);
+
+	    function findTaskId(card){
+		var taskIdPattern = /task-card-(\d+)/;
+		return card.attr('id').match(taskIdPattern)[1];
+	    }
+
+	    function findStatusId(column){
+		var statusIdPattern = /task-column-(\d+)/;
+		return column.attr('id').match(statusIdPattern)[1];
+	    }
+
+	    $.ajax({
+		url: ("/tasks/" + findTaskId(card)),
+		type: 'PUT',
+		data: {status: findStatusId(column)},
+	    });
+	    card.attr('class', 'card card_' + findStatusId(column));
 	}
     }).disableSelection();
 });

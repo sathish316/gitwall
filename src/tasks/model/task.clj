@@ -11,12 +11,20 @@
    
 (defn insert-task [user project-name task-title status]
   (let [proj (project/find-or-create-project user project-name)
-        tasks (or (:tasks proj) [])
+        tasks (project/get-tasks proj)
         task-id (mongo_counter/get-next-id :tasks)
         task {:id task-id
               :title task-title
               :status (:code status)
               :order task-id}]
-    (update! :projects proj (merge proj {:tasks (conj tasks task)}))
+    (project/update-tasks proj (conj tasks task))
     task))
 
+(defn update-task [user project-name task-id attrs]
+  (let [proj (project/find-or-create-project user project-name)
+        tasks (project/get-tasks proj)
+        task (project/find-task-by-id proj task-id)
+        modified-task (merge task attrs)]
+    (project/update-tasks proj
+                          (conj (remove #(= task-id (:id %)) tasks)
+                                modified-task))))
