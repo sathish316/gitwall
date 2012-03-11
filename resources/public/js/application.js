@@ -29,11 +29,16 @@ $(document).ready(function(){
 
     // Select active project (TODO: Load active project contents)
     function loadProjectWall(){
+	$("#wall").addClass('loading');
 	$.ajax({
 	    url: "/tasks?project=" + $('#project').val(),
 	    type: 'GET',
 	    success: function(data, status, xhr){
 		$("#wall").html($(xhr.responseText).find("#wall").html());
+		$("#wall").removeClass('loading');
+	    },
+	    error: function(){
+		$("#wall").removeClass('loading');
 	    }
 	});
     }

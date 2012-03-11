@@ -27,3 +27,6 @@ body {
 .task-column {
     padding-bottom: 20px;
 }
+.loading{
+    background:url('img/loading.gif') no-repeat center;
+}
