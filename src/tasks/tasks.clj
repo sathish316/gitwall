@@ -39,14 +39,15 @@
 
 (defn task-card [status task]
   (html
-   [:li {:class "task-card" :id (str "task-card-" (:id task))}
-    [:div {:class (str "card card_" (:status task))}
-     (:title task)]]))
+   [:li {:class (str "card card_" (:status task))
+         :id (str "task-card-" (:id task))}
+    (:title task)]))
 
 (defn task-column [[status tasks]]
-  [:div {:class "task-column span2"}
+  [:div {:class "span2"}
    [:h3 (:name status)]
-   [:ul {:class "unstyled" :id (str "task-column-" (:code status))}
+   [:ul {:class "task-column unstyled"
+         :id (str "task-column-" (:code status))}
     (map #(task-card status %) tasks)]])
 
 (defn group-tasks-by-status [statuses tasks]

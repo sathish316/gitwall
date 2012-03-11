@@ -33,5 +33,14 @@ console.log(arguments);
 	$(".project-link.active").removeClass('active');
 	$(this).addClass('active');
     });
-    
+
+    $('.task-column').sortable({
+	connectWith: ".task-column",
+	stop: function(event, ui){
+	    console.log("TODO: Update position and status");
+	    console.log($(this).attr('id'));
+	    console.log($(ui.item).attr('id'));	    
+	    console.log(ui.item.index());
+	}
+    }).disableSelection();
 });

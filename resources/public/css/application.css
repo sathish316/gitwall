@@ -24,3 +24,6 @@ body {
     margin: 5px;
     padding: 5px;
 }
+.task-column {
+    padding-bottom: 20px;
+}
