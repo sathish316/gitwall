@@ -20,7 +20,9 @@
 
 (defn migrate [from-user to-user]
   (if from-user
-    (let [anonymous-project (fetch-one :projects :where {:user from-user})]
-      (update! :projects anonymous-project
-               (merge anonymous-project {:user to-user})))))
+    (let [anonymous-project (fetch-one :projects :where {:user from-user})
+          github-project (fetch-one :projects :where {:user to-user})]
+      (if (nil? github-project)
+        (update! :projects anonymous-project
+                 (merge anonymous-project {:user to-user}))))))
            
