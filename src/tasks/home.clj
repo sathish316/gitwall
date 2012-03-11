@@ -30,6 +30,6 @@
         [:h3 "Tasks"]
         [:div
          (tasks/new-task)
-         (tasks/task-wall sample/sample-statuses sample/sample-tasks)]]]]]]))
+         (tasks/task-wall sample/sample-statuses (session :tasks))]]]]]]))
          ;(tasks/list-tasks (:tasks session))]]]]]]))
 

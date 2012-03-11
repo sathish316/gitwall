@@ -8,7 +8,8 @@
             [tasks.projects :as projects]
             [tasks.navbar :as navbar]
             [tasks.oauth_github :as oauth_github]
-            [tasks.github :as github]))
+            [tasks.github :as github]
+            [tasks.sample :as sample]))
 
 (defn store-access-token-and-redirect-to-tasks [params session]
   (let [access-token (:access-token (oauth_github/access-token params))
@@ -61,10 +62,18 @@
    [:div {:id "wall"}
      (map task-column (group-tasks-by-status statuses tasks))]))
 
+(defn initial-status []
+  (reduce #(if (< (:code %1)
+                  (:code %2))
+             %1 %2)
+          sample/sample-statuses))
+
 (defn create-task [task session]
   (let [tasks (session :tasks)
+        status (initial-status)
+        new-task {:id 1 :title task :status (:code status)} ; TODO:DB
         result (if (vector? tasks)
-                 (conj tasks task)
+                 (conj tasks new-task) 
                  (vector task))]
-    {:body (list-tasks result)
+    {:body (task-card status new-task)
      :session {:tasks result}}))

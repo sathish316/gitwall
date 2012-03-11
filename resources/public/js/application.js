@@ -8,8 +8,7 @@ $(document).ready(function(){
 	    type: 'POST',
 	    data: form.serialize(),
 	    success: function(data, status, xhr){
-console.log(arguments);
-		$('#tasks').html(xhr.responseText);
+		$('#task-column-1').append(xhr.responseText);
 		form[0].reset();
 	    }
 	});
