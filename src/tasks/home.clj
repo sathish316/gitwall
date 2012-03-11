@@ -20,7 +20,7 @@
     [:body
      (navbar/navbar session)
      [:div {:class "container"}
-      [:div {:class "row"}
+      [:div {:class "row projects-and-tasks-row"}
        [:div {:class "span2 projects-container"}
         [:h3 "Projects"]
         (projects/list-projects (github/repos (:access_token session)))
@@ -29,5 +29,5 @@
         [:h3 "Tasks"]
         [:div
          (tasks/new-task)
-         (tasks/list-tasks session)]]]]]]))
+         (tasks/list-tasks (:tasks session))]]]]]]))
 

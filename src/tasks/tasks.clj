@@ -20,21 +20,27 @@
 
 (defn new-task []
   (html
-   (form-to {:id "new_task_form"} [:post "/tasks"]
+   (form-to {:id "new_task_form" :autocomplete "off"} [:post "/tasks"]
             [:div {:class "controls"}
              (text-field {:class "input-xlarge add-task-field"} :task)
              (submit-button {:class "btn-primary add-task-btn"} "Add")
              ])))
 
-(defn list-tasks [session]
+(defn task-link [task]
+  (html
+   [:li
+    task]))
+    
+(defn list-tasks [tasks]
   (html
    [:div {:id "tasks"}
-    (unordered-list (:tasks session))]))
+    [:ul {:class "unstyled"}
+         (map task-link tasks)]]))
 
 (defn create-task [task session]
   (let [tasks (session :tasks)
         result (if (vector? tasks)
                  (conj tasks task)
                  (vector task))]
-    {:body (html (unordered-list result))
+    {:body (list-tasks result)
      :session {:tasks result}}))
