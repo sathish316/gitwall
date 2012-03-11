@@ -20,6 +20,7 @@ $(document).ready(function(){
 	    $('#new_task_form .add-task-btn').submit();
 	    return false;
 	}
+	$('.task-column').sortable('refresh');
     });
 
     // Github OAuth Login
@@ -35,6 +36,7 @@ $(document).ready(function(){
 	    type: 'GET',
 	    success: function(data, status, xhr){
 		$("#wall").html($(xhr.responseText).find("#wall").html());
+		makeWallSortable();
 		$("#wall").removeClass('loading');
 	    },
 	    error: function(){
@@ -55,28 +57,31 @@ $(document).ready(function(){
     });
 
     // Update card status when it is moved
-    $('.task-column').sortable({
-	connectWith: ".task-column",
-	receive: function(event, ui){
-	    var card = ui.item;
-	    var column = $(this);
+    function makeWallSortable(){
+	$('.task-column').sortable({
+	    connectWith: ".task-column",
+	    receive: function(event, ui){
+		var card = ui.item;
+		var column = $(this);
 
-	    function findTaskId(card){
-		var taskIdPattern = /task-card-(\d+)/;
-		return card.attr('id').match(taskIdPattern)[1];
+		function findTaskId(card){
+		    var taskIdPattern = /task-card-(\d+)/;
+		    return card.attr('id').match(taskIdPattern)[1];
+		}
+
+		function findStatusId(column){
+		    var statusIdPattern = /task-column-(\d+)/;
+		    return column.attr('id').match(statusIdPattern)[1];
+		}
+
+		$.ajax({
+		    url: ("/tasks/" + findTaskId(card)),
+		    type: 'PUT',
+		    data: {status: findStatusId(column)},
+		});
+		card.attr('class', 'card card_' + findStatusId(column));
 	    }
-
-	    function findStatusId(column){
-		var statusIdPattern = /task-column-(\d+)/;
-		return column.attr('id').match(statusIdPattern)[1];
-	    }
-
-	    $.ajax({
-		url: ("/tasks/" + findTaskId(card)),
-		type: 'PUT',
-		data: {status: findStatusId(column)},
-	    });
-	    card.attr('class', 'card card_' + findStatusId(column));
-	}
-    }).disableSelection();
+	}).disableSelection();
+    }
+    makeWallSortable();
 });
