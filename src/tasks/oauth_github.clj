@@ -5,8 +5,8 @@
   {:authorization-uri "https://github.com/login/oauth/authorize"
    :access-token-uri "https://github.com/login/oauth/access_token"
    :redirect-uri "http://localhost:3000/github_oauth2_callback"
-   :client-id "b53a57b4596e648978bd"
-   :client-secret "0064f60f8e86e261037813185f496be679e4e6b5"
+   :client-id (or (System/getenv "GITHUB_CLIENT_ID") "91dc35fe530ab2a358b2")
+   :client-secret (or (System/getenv "GITHUB_CLIENT_SECRET") "4914f9d2be376e4579e04ef203ebe37af4079f2b")
    :access-query-param :access-token
    :grant-type "authorization_code"})
 
