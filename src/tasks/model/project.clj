@@ -17,3 +17,10 @@
 (defn update-tasks [project tasks]
   (update! :projects project
            (merge project {:tasks tasks})))
+
+(defn migrate [from-user to-user]
+  (if from-user
+    (let [anonymous-project (fetch-one :projects :where {:user from-user})]
+      (update! :projects anonymous-project
+               (merge anonymous-project {:user to-user})))))
+           

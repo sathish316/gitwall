@@ -11,13 +11,18 @@
             [tasks.oauth_github :as oauth_github]
             [tasks.github :as github]
             [tasks.sample :as sample]
-            [tasks.model.task :as task]))
+            [tasks.model.task :as task]
+            [tasks.model.project :as project]
+            [tasks.login :as login]))
 
 (defn store-access-token-and-redirect-to-tasks [params session]
   (let [access-token (:access-token (oauth_github/access-token params))
+        anonymous-username (session :anonymous_username)
+        github-username (github/user_login access-token)
         session (assoc session
                   :access_token access-token
-                  :github_username (github/user_login access-token))]
+                  :github_username github-username)]
+    (project/migrate anonymous-username github-username)
     (-> (response/redirect "/tasks")
         (assoc :session session))))
 
@@ -73,13 +78,13 @@
 
 (defn create-task [project task session]
   (let [status (initial-status)
-        user (session :github_username)
+        user (login/github-or-anonymous-user session)
         project (or project "default")
         new-task (task/insert-task user project task status)]
     {:body (task-card status new-task)}))
 
 (defn update-task [task-id status session]
-  (let [user (session :github_username)
+  (let [user (login/github-or-anonymous-user session)
         project "default"]
     (task/update-task user project task-id
                       {:status status})
