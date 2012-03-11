@@ -18,3 +18,9 @@ body {
 .projects-and-tasks-row {
     margin-left: -50px;
 }
+.card {
+    cursor: pointer;
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;
+}

@@ -35,7 +35,30 @@
   (html
    [:div {:id "tasks"}
     [:ul {:class "unstyled"}
-         (map task-link tasks)]]))
+     (map task-link tasks)]]))
+
+(defn task-card [status task]
+  (html
+   [:li {:class "task-card" :id (str "task-card-" (:id task))}
+    [:div {:class (str "card card_" (:status task))}
+     (:title task)]]))
+
+(defn task-column [[status tasks]]
+  [:div {:class "task-column span2"}
+   [:h3 (:name status)]
+   [:ul {:class "unstyled" :id (str "task-column-" (:code status))}
+    (map #(task-card status %) tasks)]])
+
+(defn group-tasks-by-status [statuses tasks]
+  (let [tasks-by-status-code (group-by :status tasks)]
+    (map (fn [status]
+           [status (tasks-by-status-code (:code status))])
+         statuses)))
+
+(defn task-wall [statuses tasks]
+   (html
+   [:div {:id "wall"}
+     (map task-column (group-tasks-by-status statuses tasks))]))
 
 (defn create-task [task session]
   (let [tasks (session :tasks)
