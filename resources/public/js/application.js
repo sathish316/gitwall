@@ -100,10 +100,14 @@ $(document).ready(function(){
 
     // Delete card
     $(".delete-task-container").live("mouseover", function(){
-	$(this).find('i').show();
+	if(!$(this).parent('.card').hasClass('sample_task')){
+	    $(this).find('i').show();
+	}
     });
     $(".delete-task-container").live("mouseout", function(){
-	$(this).find('i').hide();
+	if(!$(this).parent('.card').hasClass('sample_task')){
+	    $(this).find('i').hide();
+	}
     });
     $(".delete-task-container i").live("click", function(){
 	var card = $(this).closest('li');
