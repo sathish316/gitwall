@@ -97,4 +97,31 @@ $(document).ready(function(){
 	}).disableSelection();
     }
     makeWallSortable();
+
+    // Delete card
+    $(".delete-task-container").live("mouseover", function(){
+	$(this).find('i').show();
+    });
+    $(".delete-task-container").live("mouseout", function(){
+	$(this).find('i').hide();
+    });
+    $(".delete-task-container i").live("click", function(){
+	var card = $(this).closest('li');
+	function findTaskId(card){
+	    var taskIdPattern = /task-card-(\d+)/;
+	    return card.attr('id').match(taskIdPattern)[1];
+	}
+	var taskId = findTaskId(card);
+	if(!card.hasClass('sample_task')){
+	    $.ajax({
+		url: ("/tasks/" + findTaskId(card)),
+		type: 'DELETE',
+		data: {project: $('#project').val()},
+		success: function(){
+		    $(card).remove();
+		}
+	    });
+	}
+    });
+
 });

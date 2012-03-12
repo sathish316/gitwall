@@ -46,18 +46,21 @@
     [:ul {:class "unstyled"}
      (map task-link tasks)]]))
 
-(defn task-card [status task]
+(defn task-card [task]
   (html
    [:li {:class (str "card card_" (:status task) " " (:class task))
          :id (str "task-card-" (:id task))}
-    (:title task)]))
+    [:span {:class "delete-task-container"}
+     [:i {:class "hide icon icon-remove-sign delete-task-icon"}] "&nbsp;&nbsp;"]
+    (:title task)
+    ]))
 
 (defn task-column [[status tasks]]
   [:div {:class "span2"}
    [:h3 (:name status)]
    [:ul {:class "task-column unstyled"
          :id (str "task-column-" (:code status))}
-    (map #(task-card status %) tasks)]])
+    (map task-card tasks)]])
 
 (defn group-tasks-by-status [statuses tasks]
   (let [tasks-by-status-code (group-by :status tasks)]
@@ -81,11 +84,17 @@
         user (login/github-or-anonymous-user session)
         project (or project "default")
         new-task (task/insert-task user project task status)]
-    {:body (task-card status new-task)}))
+    {:body (task-card new-task)}))
 
 (defn update-task [project task-id status session]
   (let [user (login/github-or-anonymous-user session)
         project (or project "default")]
     (task/update-task user project task-id
                       {:status status})
+    {:status 200}))
+
+(defn delete-task [project task-id session]
+  (let [user (login/github-or-anonymous-user session)
+        project (or project "default")]
+    (task/delete-task user project task-id)
     {:status 200}))

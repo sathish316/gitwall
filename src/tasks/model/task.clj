@@ -28,3 +28,10 @@
     (project/update-tasks proj
                           (conj (remove #(= task-id (:id %)) tasks)
                                 modified-task))))
+
+(defn delete-task [user project-name task-id]
+  (let [proj (project/find-or-create-project user project-name)
+        tasks (project/get-tasks proj)
+        task (project/find-task-by-id proj task-id)]
+    (project/update-tasks proj
+                          (remove #(= task-id (:id %)) tasks))))

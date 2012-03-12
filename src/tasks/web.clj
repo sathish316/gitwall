@@ -24,6 +24,10 @@
                           (Integer. (params :id))
                           (Integer. (params :status))
                           session))
+  (DELETE "/tasks/:id" {params :params session :session}
+          (tasks/delete-task (params :project)
+                             (Integer. (params :id))
+                             session))
   (route/resources "/"))
 
 (def app

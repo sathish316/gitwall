@@ -40,3 +40,11 @@ body {
     border-style: dotted;
     border-color: #DDDCE6;
 }
+.delete-task-container {
+    float: right;
+}
+.delete-task-icon {
+    float: right;
+    margin-top: 1px;
+    margin-right: 1px;
+}
