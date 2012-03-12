@@ -31,6 +31,7 @@ $(document).ready(function(){
 
     // Select active project (TODO: Load active project contents)
     function loadProjectWall(){
+	$("#wall").html('<br/><br/>');
 	$("#wall").addClass('loading');
 	$.ajax({
 	    url: "/tasks?project=" + $('#project').val(),

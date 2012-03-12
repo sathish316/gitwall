@@ -66,8 +66,8 @@
          statuses)))
 
 (defn task-wall [statuses tasks]
-   (html
-   [:div {:id "wall"}
+  (html
+   [:div {:id "wall" :class "span10"}
      (map task-column (group-tasks-by-status statuses tasks))]))
 
 (defn initial-status []
