@@ -74,13 +74,17 @@ $(document).ready(function(){
 		    var statusIdPattern = /task-column-(\d+)/;
 		    return column.attr('id').match(statusIdPattern)[1];
 		}
-
-		$.ajax({
-		    url: ("/tasks/" + findTaskId(card)),
-		    type: 'PUT',
-		    data: {project: $('#project').val(), status: findStatusId(column)},
-		});
-		card.attr('class', 'card card_' + findStatusId(column));
+		
+		if(!card.hasClass('sample_task')){
+		    $.ajax({
+			url: ("/tasks/" + findTaskId(card)),
+			type: 'PUT',
+			data: {project: $('#project').val(), status: findStatusId(column)},
+		    });
+		    card.attr('class', 'card card_' + findStatusId(column));
+		} else {
+		    card.attr('class', 'card sample_task card_' + findStatusId(column));
+		}
 	    }
 	}).disableSelection();
     }
