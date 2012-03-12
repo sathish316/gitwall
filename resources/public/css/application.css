@@ -26,7 +26,17 @@ body {
 }
 .task-column {
     padding-bottom: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+    height: 100%;
 }
 .loading{
     background:url('../img/loading.gif') no-repeat center;
+}
+#wall h3 {
+    text-align: center;
+}
+.highlight-column {
+    border-style: dotted;
+    border-color: #DDDCE6;
 }

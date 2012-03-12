@@ -62,6 +62,13 @@ $(document).ready(function(){
     function makeWallSortable(){
 	$('.task-column').sortable({
 	    connectWith: ".task-column",
+	    placeholder: "task-column-hover-over",
+	    over: function(event, ui){
+		$(this).parent('div').addClass('highlight-column');
+	    },
+	    out: function(event, ui){
+		$(this).parent('div').removeClass('highlight-column');
+	    },
 	    receive: function(event, ui){
 		var card = ui.item;
 		var column = $(this);
