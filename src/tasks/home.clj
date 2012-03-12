@@ -14,6 +14,8 @@
             [tasks.model.task :as task]
             [tasks.login :as login]))
 
+(declare webengage-script)
+
 ;;FIXME: github request not required for xhr requests
 (defn gitwall [project session]
   (let [user (login/github-or-anonymous-user session)
@@ -25,7 +27,8 @@
       [:html
        [:head
         (default-javascripts)
-        (default-stylesheets)]
+        (default-stylesheets)
+        (webengage-script)]
        [:body
         (navbar/navbar session)
         [:div {:class "container"}
@@ -44,3 +47,9 @@
                                tasks))]]]]]])
      :session
      (assoc session user-type user)}))
+
+(defn webengage-script []
+  (html
+   [:webengage {:license "d3a49d18"}
+    (str "<script id='_webengage_script_tag' type='text/javascript'>
+(function(){var _we = document.createElement('script');_we.type = 'text/javascript';_we.async = true;var _weWidgetJs = '/js/widget/webengage-min-v-2.0.js';if(document.location.protocol == 'https:'){_we.src='//ssl.widgets.webengage.com' +_weWidgetJs;}else{_we.src='//cdn.widgets.webengage.com' +_weWidgetJs;} var _sNode = document.getElementById('_webengage_script_tag');_sNode.parentNode.insertBefore(_we, _sNode);})();</script>")]))
