@@ -48,7 +48,7 @@
 
 (defn task-card [status task]
   (html
-   [:li {:class (str "card card_" (:status task))
+   [:li {:class (str "card card_" (:status task) " " (:class task))
          :id (str "task-card-" (:id task))}
     (:title task)]))
 

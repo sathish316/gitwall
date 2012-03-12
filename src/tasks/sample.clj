@@ -7,8 +7,8 @@
 
 (def sample-tasks
   [
-   {:id 201 :title "Make cards draggable" :status 1}
-   {:id 202 :title "Make cards droppable" :status 1}
-   {:id 203 :title "Make cards sortable" :status 1}
+   {:id 201 :title "Add New Task" :status 1 :class "sample_task"}
+   {:id 202 :title "Sign in to Github to access Projects" :status 1 :class "sample_task"}
+   {:id 203 :title "Completed task" :status 3 :class "sample_task"}
    ])
 

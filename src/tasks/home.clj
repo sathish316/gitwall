@@ -17,7 +17,9 @@
 ;;FIXME: github request not required for xhr requests
 (defn gitwall [project session]
   (let [user (login/github-or-anonymous-user session)
-        user-type (login/github-or-anonymous-user-type session)]
+        user-type (login/github-or-anonymous-user-type session)
+        project (or project "default")
+        tasks (task/find-all-by user project)]
     {:body
      (html
       [:html
@@ -37,6 +39,8 @@
            [:div
             (tasks/new-task)
             (tasks/task-wall sample/sample-statuses
-                             (task/find-all-by user (or project "default")))]]]]]])
+                             (if (and (= "default" project) (empty? tasks))
+                               sample/sample-tasks
+                               tasks))]]]]]])
      :session
      (assoc session user-type user)}))

@@ -10,6 +10,7 @@ $(document).ready(function(){
 	    success: function(data, status, xhr){
 		$('#task-column-1').append(xhr.responseText);
 		form[0].reset();
+		$('.sample_task').remove();
 	    }
 	});
     });
