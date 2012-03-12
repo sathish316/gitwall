@@ -11,6 +11,7 @@
    (include-js "/js/jquery-1.7.1.min.js")
    (include-js "/js/application.js")
    (include-js "/js/jquery-ui-1.8.18.custom.min.js")
+   (include-js "/js/jquery.ui.touch-punch.min.js")
    (include-js "/js/bootstrap.js")))
 
 (defn default-stylesheets []
