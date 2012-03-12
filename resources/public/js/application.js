@@ -78,7 +78,7 @@ $(document).ready(function(){
 		$.ajax({
 		    url: ("/tasks/" + findTaskId(card)),
 		    type: 'PUT',
-		    data: {status: findStatusId(column)},
+		    data: {project: $('#project').val(), status: findStatusId(column)},
 		});
 		card.attr('class', 'card card_' + findStatusId(column));
 	    }

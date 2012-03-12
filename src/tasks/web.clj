@@ -20,7 +20,8 @@
                            (params :task)
                            session))
   (PUT "/tasks/:id" {params :params session :session}
-       (tasks/update-task (Integer. (params :id))
+       (tasks/update-task (params :project)
+                          (Integer. (params :id))
                           (Integer. (params :status))
                           session))
   (route/resources "/"))

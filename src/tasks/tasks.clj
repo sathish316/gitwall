@@ -83,9 +83,9 @@
         new-task (task/insert-task user project task status)]
     {:body (task-card status new-task)}))
 
-(defn update-task [task-id status session]
+(defn update-task [project task-id status session]
   (let [user (login/github-or-anonymous-user session)
-        project "default"]
+        project (or project "default")]
     (task/update-task user project task-id
                       {:status status})
     {:status 200}))
