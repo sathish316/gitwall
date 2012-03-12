@@ -50,6 +50,5 @@
 
 (defn webengage-script []
   (html
-   [:webengage {:license "d3a49d18"}
-    (str "<script id='_webengage_script_tag' type='text/javascript'>
-(function(){var _we = document.createElement('script');_we.type = 'text/javascript';_we.async = true;var _weWidgetJs = '/js/widget/webengage-min-v-2.0.js';if(document.location.protocol == 'https:'){_we.src='//ssl.widgets.webengage.com' +_weWidgetJs;}else{_we.src='//cdn.widgets.webengage.com' +_weWidgetJs;} var _sNode = document.getElementById('_webengage_script_tag');_sNode.parentNode.insertBefore(_we, _sNode);})();</script>")]))
+   [:webengage {:license "11b5643aa"}
+    (str "<script id='_webengage_script_tag' type='text/javascript'>(function(){var _we = document.createElement('script');_we.type = 'text/javascript';_we.async = true;var _weWidgetJs = '/js/widget/webengage-min-v-2.0.js';if(document.location.protocol == 'https:'){_we.src='//ssl.widgets.webengage.com' +_weWidgetJs;}else{_we.src='//cdn.widgets.webengage.com' +_weWidgetJs;} var _sNode = document.getElementById('_webengage_script_tag');_sNode.parentNode.insertBefore(_we, _sNode);})();</script>")]))
