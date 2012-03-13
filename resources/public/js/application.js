@@ -100,14 +100,10 @@ $(document).ready(function(){
 
     // Delete card
     $(".delete-task-container").live("mouseover", function(){
-	if(!$(this).parent('.card').hasClass('sample_task')){
-	    $(this).find('i').show();
-	}
+	$(this).find('i').show();
     });
     $(".delete-task-container").live("mouseout", function(){
-	if(!$(this).parent('.card').hasClass('sample_task')){
-	    $(this).find('i').hide();
-	}
+	$(this).find('i').hide();
     });
     $(".delete-task-container i").live("click", function(){
 	var card = $(this).closest('li');
@@ -125,6 +121,8 @@ $(document).ready(function(){
 		    $(card).remove();
 		}
 	    });
+	} else {
+	    card.hide();
 	}
     });
 
