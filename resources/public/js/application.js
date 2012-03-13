@@ -24,11 +24,6 @@ $(document).ready(function(){
 	$('.task-column').sortable('refresh');
     });
 
-    // Github OAuth Login
-    $('#github-sign-in').click(function(){
-	$('#github-sign-in-form').trigger('submit');
-    });
-
     // Select active project (TODO: Load active project contents)
     function loadProjectWall(){
 	$("#wall").html('<br/><br/>');

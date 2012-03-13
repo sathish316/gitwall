@@ -6,10 +6,14 @@
             [ring.util.response :as response]
             [tasks.tasks :as tasks]
             [tasks.home :as home]
-            [tasks.mongo :as mongo]))
+            [tasks.mongo :as mongo]
+            [ring.util.response :as response]
+            [tasks.oauth_github :as oauth_github]))
 
 (defroutes app-routes
   (GET "/" [] (response/redirect "/tasks"))
+  (GET "/login" []
+       (response/redirect (:uri oauth_github/auth-req)))
   (GET "/github_oauth2_callback" {params :params session :session}
        (tasks/store-access-token-and-redirect-to-tasks params session))
   (GET "/tasks" {params :params session :session}

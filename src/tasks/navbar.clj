@@ -23,7 +23,7 @@
           [:div {:class "nav-collapse"}
             [:ul {:class "nav"}
              [:li {:class "active"}
-              [:a {:id "github-sign-in" :href "#"}
+              [:a {:id "github-sign-in" :href "/login"}
                (image {:class "github-logo"} "img/github_32.png")
                [:span {:class "github-username"}
                 (github-username session)]]]]]]]]))
