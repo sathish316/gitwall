@@ -48,3 +48,6 @@ body {
     margin-top: 1px;
     margin-right: 1px;
 }
+.sample_delete_task .delete-task-icon {
+    display: block;
+}
