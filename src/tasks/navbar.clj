@@ -26,5 +26,8 @@
               [:a {:id "github-sign-in" :href "/login"}
                (image {:class "github-logo"} "img/github_32.png")
                [:span {:class "github-username"}
-                (github-username session)]]]]]]]]))
+                (github-username session)]]]
+             (if (:github_username session)
+               [:li
+                [:a {:id "github-logout" :href "/logout"} "Logout"]])]]]]]))
 

@@ -14,6 +14,9 @@
   (GET "/" [] (response/redirect "/tasks"))
   (GET "/login" []
        (response/redirect (:uri oauth_github/auth-req)))
+  (GET "/logout" {session :session}
+       (-> (response/redirect "/tasks")
+           (assoc :session {})))
   (GET "/github_oauth2_callback" {params :params session :session}
        (tasks/store-access-token-and-redirect-to-tasks params session))
   (GET "/tasks" {params :params session :session}
