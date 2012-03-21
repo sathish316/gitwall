@@ -2,7 +2,7 @@
   (:require [clj-oauth2.client :as oauth2]))
 
 (def github-oauth2
-  {:authorization-uri "https://github.com/login/oauth/authorize"
+  {:authorization-uri "https://github.com/login/oauth/authorize?scope=repo"
    :access-token-uri "https://github.com/login/oauth/access_token"
    :redirect-uri (if (System/getenv "GITHUB_CLIENT_ID")
                    "http://gitwall.herokuapp.com/github_oauth2_callback"
